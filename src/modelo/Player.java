@@ -1,7 +1,10 @@
 package modelo;
 
 import java.awt.Image;
+import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.ImageIcon;
 
@@ -11,12 +14,17 @@ public class Player {
 	private int dx, dy;
 	private Image imagem;
 	private int altura, largura;
+	private List <Tiro> tiros; //armazenar a variavel numa lista pra aguentar quantidade de tiros
+	private boolean isVisivel;
 	
 	
 	//metodo para definir coordenada da tela que o player vai nascer
 	public Player() {
 		this.x = 100;
 		this.y = 100;
+		isVisivel = true;
+		
+		tiros = new ArrayList<Tiro>();
 	}
 	
 	//metodo para definir imagem do player
@@ -33,10 +41,22 @@ public class Player {
 		y += dy;
 	}
 	
+	public void tiroSimples() {
+		this.tiros.add(new Tiro(x+largura, y +( altura/2)));
+	}
+	
+	public Rectangle getBounds() {
+		return new Rectangle (x,y,largura, altura);
+	}
+	
 	//metodo para usar teclas do teclado
 	
 	public void keyPressed(KeyEvent tecla) {
 		int codigo = tecla.getKeyCode();
+		
+		if(codigo == KeyEvent.VK_A) {
+			tiroSimples();
+		}
 		
 		if(codigo == KeyEvent.VK_UP) {
 			dy=-3;
@@ -86,6 +106,18 @@ public class Player {
 	
 	public Image getImagem() {
 		return imagem;
+	}
+
+	public List<Tiro> getTiros() {
+		return tiros;
+	}
+
+	public boolean isVisivel() {
+		return isVisivel;
+	}
+
+	public void setVisivel(boolean isVisivel) {
+		this.isVisivel = isVisivel;
 	}
 	
 	
