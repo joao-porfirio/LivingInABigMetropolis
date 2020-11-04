@@ -76,7 +76,7 @@ public class Fase extends JPanel implements ActionListener {
 				graficos.drawImage(in.getImagem(), in.getX(), in.getY(), this);
 			}
 		}else {//tela game over
-			ImageIcon fimJogo = new ImageIcon("res\\gameOver.png");
+			ImageIcon fimJogo = new ImageIcon("res\\gameOver.jpg");
 			graficos.drawImage(fimJogo.getImage(), 0, 0, null);
 		}
 
