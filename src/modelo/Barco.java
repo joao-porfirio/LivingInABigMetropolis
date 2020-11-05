@@ -8,28 +8,28 @@ import java.util.List;
 
 import javax.swing.ImageIcon;
 
-public class Player {
+public class Barco {
 
 	private int x, y;
 	private int dx, dy;
 	private Image imagem;
 	private int altura, largura;
-	private List <Tiro> tiros; //armazenar a variavel numa lista pra aguentar quantidade de tiros
+	private List <RedeDePesca> tiros; //armazenar a variavel numa lista pra aguentar quantidade de tiros
 	private boolean isVisivel;
 	
 	
 	//metodo para definir coordenada da tela que o player vai nascer
-	public Player() {
+	public Barco() {
 		this.x = 100;
 		this.y = 100;
 		isVisivel = true;
 		
-		tiros = new ArrayList<Tiro>();
+		tiros = new ArrayList<RedeDePesca>();
 	}
 	
 	//metodo para definir imagem do player
 	public void load() {
-		ImageIcon referencia = new ImageIcon("res\\pescadorP.png");
+		ImageIcon referencia = new ImageIcon("res\\barco.png");
 		imagem = referencia.getImage();
 		altura = imagem.getHeight(null);
 		largura = imagem.getWidth(null);
@@ -42,7 +42,7 @@ public class Player {
 	}
 	
 	public void tiroSimples() {
-		this.tiros.add(new Tiro(x+largura, y +( altura/2)));
+		this.tiros.add(new RedeDePesca(x+largura, y +( altura/2)));
 	}
 	
 	public Rectangle getBounds() {
@@ -54,7 +54,7 @@ public class Player {
 	public void keyPressed(KeyEvent tecla) {
 		int codigo = tecla.getKeyCode();
 		
-		if(codigo == KeyEvent.VK_A) {
+		if(codigo == KeyEvent.VK_SPACE) {
 			tiroSimples();
 		}
 		
@@ -108,7 +108,7 @@ public class Player {
 		return imagem;
 	}
 
-	public List<Tiro> getTiros() {
+	public List<RedeDePesca> getTiros() {
 		return tiros;
 	}
 

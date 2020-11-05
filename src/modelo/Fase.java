@@ -18,9 +18,10 @@ import javax.swing.Timer;
 public class Fase extends JPanel implements ActionListener {
 	//objeto do tipo Image chamado fundo
 	private Image fundo;
-	private Player player;
+	//private Image login;
+	private Barco player;
 	private Timer timer;
-	private List<Enemy1> enemy1;
+	private List<Dejetos> enemy1;
 	private boolean emJogo;
 		
 	
@@ -28,10 +29,10 @@ public class Fase extends JPanel implements ActionListener {
 		setFocusable(true);
 		setDoubleBuffered(true);
 		
-		ImageIcon referencia = new ImageIcon("res\\fundoCenario.jpg");
+		ImageIcon referencia = new ImageIcon("res\\fundo.png");
 		fundo = referencia.getImage();
 		
-		player = new Player();
+		player = new Barco();
 		player.load();
 		
 		addKeyListener(new TecladoAdapter());
@@ -46,13 +47,13 @@ public class Fase extends JPanel implements ActionListener {
 	
 	public void inicializaInimigos() {
 		//n de inimigos do game
-		int coordenadas [] = new int[40];
-		enemy1= new ArrayList<Enemy1>();
+		int coordenadas [] = new int[100];
+		enemy1= new ArrayList<Dejetos>();
 		
 		for (int i = 0; i < coordenadas.length; i++) {
 			int x = (int)(Math.random() * 8000+1024);
 			int y = (int)(Math.random() * 650+30);
-			enemy1.add(new Enemy1(x, y));
+			enemy1.add(new Dejetos(x, y));
 		}
 	}
 	
@@ -62,21 +63,21 @@ public class Fase extends JPanel implements ActionListener {
 			graficos.drawImage(fundo, 0, 0, null);
 			graficos.drawImage(player.getImagem(), player.getX(), player.getY(), this);
 			
-			List<Tiro> tiros = player.getTiros();
+			List<RedeDePesca> tiros = player.getTiros();
 			for(int i = 0; i < tiros.size(); i++) {
-				Tiro m = tiros.get(i);
+				RedeDePesca m = tiros.get(i);
 				m.load();
 				graficos.drawImage(m.getImagem(), m.getX(), m.getY(), this);
 			}
 			
 			
 			for (int o = 0; o < enemy1.size(); o++) {
-				Enemy1 in = enemy1.get(o);
+				Dejetos in = enemy1.get(o);
 				in.load();
 				graficos.drawImage(in.getImagem(), in.getX(), in.getY(), this);
 			}
 		}else {//tela game over
-			ImageIcon fimJogo = new ImageIcon("res\\gameOver.jpg");
+			ImageIcon fimJogo = new ImageIcon("res\\gameOver.png");
 			graficos.drawImage(fimJogo.getImage(), 0, 0, null);
 		}
 
@@ -89,10 +90,10 @@ public class Fase extends JPanel implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		player.update();
-		//pegar lista de tiros e demonstrar na tela
-		List<Tiro> tiros = player.getTiros();
+		//pegar lista de redes e demonstrar na tela
+		List<RedeDePesca> tiros = player.getTiros();
 		for(int i = 0; i < tiros.size(); i++) {
-			Tiro m = tiros.get(i);
+			RedeDePesca m = tiros.get(i);
 				if(m.isVisivel()) {
 					m.update();
 				}else {
@@ -102,7 +103,7 @@ public class Fase extends JPanel implements ActionListener {
 		
 		//se o inimigo for visivel
 		for (int o = 0; o < enemy1.size(); o++) {
-			Enemy1 in = enemy1.get(o);
+			Dejetos in = enemy1.get(o);
 				if(in.isVisivel()) {
 					in.update();
 				}else {
@@ -120,7 +121,7 @@ public class Fase extends JPanel implements ActionListener {
 		
 		
 		for(int  i = 0; i < enemy1.size(); i++) {
-			Enemy1 tempEnemy1 = enemy1.get(i);
+			Dejetos tempEnemy1 = enemy1.get(i);
 			formaEnemy1 = tempEnemy1.getBounds();
 				if(formaBarco.intersects(formaEnemy1)) {
 					player.setVisivel(false);
@@ -129,12 +130,12 @@ public class Fase extends JPanel implements ActionListener {
 				}
 		}
 		//retangulo tiro e inimigo
-		List<Tiro> tiros = player.getTiros();
+		List<RedeDePesca> tiros = player.getTiros();
 		for(int j = 0; j < tiros.size(); j++) {
-			Tiro tempTiro = tiros.get(j);
+			RedeDePesca tempTiro = tiros.get(j);
 			formaTiro = tempTiro.getBounds();
 			for (int o = 0; o < enemy1.size(); o++) {
-				Enemy1 tempEnemy1 = enemy1.get(o);
+				Dejetos tempEnemy1 = enemy1.get(o);
 				formaEnemy1 = tempEnemy1.getBounds();
 				if(formaTiro.intersects(formaEnemy1)) {
 					tempEnemy1.setVisivel(false);
